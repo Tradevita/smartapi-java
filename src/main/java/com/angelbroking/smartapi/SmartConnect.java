@@ -165,7 +165,6 @@ public class SmartConnect {
 
 			JSONObject loginResultObject = smartAPIRequestHandler.postRequest(this.apiKey, routes.getLoginUrl(),
 					params);
-			System.out.print(loginResultObject);
 			String jwtToken = loginResultObject.getJSONObject("data").getString("jwtToken");
 			String refreshToken = loginResultObject.getJSONObject("data").getString("refreshToken");
 			String feedToken = loginResultObject.getJSONObject("data").getString("feedToken");
@@ -406,7 +405,7 @@ public class SmartConnect {
 	 * @return Map of String and LTPQuote.
 	 * 
 	 */
-	public JSONObject getLTP(String exchange, String tradingSymbol, String symboltoken) {
+	public LTP getLTP(String exchange, String tradingSymbol, String symboltoken) {
 		try {
 			JSONObject params = new JSONObject();
 			params.put("exchange", exchange);
@@ -416,7 +415,7 @@ public class SmartConnect {
 			String url = routes.get("api.ltp.data");
 			JSONObject response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
 
-			return response.getJSONObject("data");
+			return new LTP().parseResponse(response);
 		} catch (Exception | SmartAPIException e) {
 			System.out.println(e.getMessage());
 			return null;
@@ -465,11 +464,14 @@ public class SmartConnect {
 	 * @return Object of Holding.
 	 * 
 	 */
-	public JSONObject getHolding() {
+	public List<Holdings> getHolding() {
 		try {
 			String url = routes.get("api.order.rms.holding");
 			JSONObject response = smartAPIRequestHandler.getRequest(this.apiKey, url, accessToken);
-			return response;
+
+			return new Holdings().parseResponse(response);
+
+//			return response;
 		} catch (Exception | SmartAPIException e) {
 			System.out.println(e.getMessage());
 			return null;
@@ -686,12 +688,27 @@ public class SmartConnect {
 	 * @param params is historic data params.
 	 * @return returns the details of historic data.
 	 */
-	public String candleData(JSONObject params) {
+	public List<Candle> candleData(
+			String exchange,
+			String symbolToken,
+			String interval,
+			String fromDate,
+			String toDate
+	) {
 		try {
 			String url = routes.get("api.candle.data");
+
+			JSONObject params = params = new JSONObject();
+			params.put("exchange", exchange);
+			params.put("symboltoken", symbolToken);
+			params.put("interval", interval);
+			params.put("fromdate", fromDate);
+			params.put("todate", toDate);
+
 			JSONObject response = smartAPIRequestHandler.postRequest(this.apiKey, url, params, accessToken);
-			System.out.println(response);
-			return response.getString("data");
+
+
+			return new Candle().parseResponse(response);
 		} catch (Exception | SmartAPIException e) {
 			System.out.println(e.getMessage());
 			return null;
