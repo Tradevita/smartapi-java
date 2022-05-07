@@ -6,7 +6,7 @@ package com.angelbroking.smartapi.http.exceptions;
 @SuppressWarnings("serial")
 public class GeneralException extends SmartAPIException {
     // initialize and call the base class
-    public GeneralException(String message, String code){
+    public GeneralException(String message, String code) {
         super(message, code);
     }
 }

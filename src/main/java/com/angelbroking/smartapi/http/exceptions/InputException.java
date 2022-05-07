@@ -6,12 +6,12 @@ package com.angelbroking.smartapi.http.exceptions;
  */
 public class InputException extends SmartAPIException {
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	// initialize and call base exception constructor
-    public InputException(String message, String code){
+    // initialize and call base exception constructor
+    public InputException(String message, String code) {
         super(message, code);
     }
 }

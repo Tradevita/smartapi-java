@@ -8,12 +8,12 @@ package com.angelbroking.smartapi.http.exceptions;
 public class NetworkException extends SmartAPIException {
 
     /**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+     *
+     */
+    private static final long serialVersionUID = 1L;
 
-	// initialize Smart API Network exception and call Base Exception constructor
-    public NetworkException(String message, String code){
+    // initialize Smart API Network exception and call Base Exception constructor
+    public NetworkException(String message, String code) {
         super(message, code);
     }
 }
